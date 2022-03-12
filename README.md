@@ -1,0 +1,1 @@
+# terraform_regional_cluster_template_yandex_cloud
