@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-}
-
 provider "yandex" {
   token = "<iam-token>" # yc iam create-token  
   cloud_id  = "<cloud-id>"
@@ -132,15 +124,4 @@ resource "yandex_kubernetes_node_group" "my_node_group" {
       duration   = "4h30m"
     }
   }
-}
-
-
-output "version_info" {
-  value = "${yandex_kubernetes_cluster.regional_cluster_resource_name.master.0.version_info}"
-  description = "Information about cluster version"
-}
-
-output "public_ip_of_k8s_cluster_master" {
-  value = "${yandex_kubernetes_cluster.regional_cluster_resource_name.master.0.external_v4_address}"
-  description = "The public ip of k8s cluster (master)"
 }
