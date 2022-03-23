@@ -1,14 +1,3 @@
-provider "yandex" {
-  token = "<iam-token>" # yc iam create-token  
-  cloud_id  = "<cloud-id>"
-  folder_id = var.folder-id
-  zone      = "ru-central1-a"
-}
-
-variable "folder-id" {
-  default = "<folder-id>"
-}
-
 resource "yandex_kubernetes_cluster" "regional_cluster_resource_name" {
   name        = "k8s-cluster-regional-template"
   description = "k8s-cluster-regional-template"
