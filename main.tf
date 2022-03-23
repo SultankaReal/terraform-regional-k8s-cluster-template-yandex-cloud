@@ -2,7 +2,7 @@ resource "yandex_kubernetes_cluster" "regional_cluster_resource_name" {
   name        = "k8s-cluster-regional-template"
   description = "k8s-cluster-regional-template"
 
-  network_id = "network-id"
+  network_id = "<network-id>"
 
   master {
     regional {
