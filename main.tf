@@ -1,8 +1,8 @@
 resource "yandex_kubernetes_cluster" "regional_cluster_resource_name" {
-  name        = "k8s-cluster-regional-template"
-  description = "k8s-cluster-regional-template"
+  name        = "k8s-cluster-regional-template-new"
+  description = "k8s-cluster-regional-template-new"
 
-  network_id = "<network-id>"
+  network_id = var.default_network_id
 
   master {
     regional {
@@ -10,21 +10,21 @@ resource "yandex_kubernetes_cluster" "regional_cluster_resource_name" {
 
       location {
         zone      = "ru-central1-a"
-        subnet_id = "<subnet-id-of-zone-a>"
+        subnet_id = var.default_subnet_id_zone_a
       }
 
       location {
         zone      = "ru-central1-b"
-        subnet_id = "<subnet-id-of-zone-b>"
+        subnet_id = var.default_subnet_id_zone_b
       }
 
       location {
         zone      = "ru-central1-c"
-        subnet_id = "<subnet-id-of-zone-c>"
+        subnet_id = var.default_subnet_id_zone_c
       }
     }
 
-    version   = "1.20" #version of the cluster
+    version   = var.default_version_k8s_masters #version of the cluster
     public_ip = true 
 
     maintenance_policy {
@@ -43,30 +43,22 @@ resource "yandex_kubernetes_cluster" "regional_cluster_resource_name" {
       }
     }
   }
-
-  labels = {
-    my_key       = "my_value"
-    my_other_key = "my_other_value"
-  }
   
-  service_account_id      = "<sa-id>"
-  node_service_account_id = "<node-sa-id>"
-  release_channel = "STABLE" #type of release of the cluster
+  service_account_id      = var.default_service_account_id
+  node_service_account_id = var.default_node_service_account_id
+  release_channel = var.default_release_channel #type of release of the cluster
 }
 
 
 resource "yandex_kubernetes_node_group" "my_node_group" {
   cluster_id  = "${yandex_kubernetes_cluster.regional_cluster_resource_name.id}"
-  name        = "k8s-cluster-regional-template-node-group"
-  description = "k8s-cluster-regional-template-node-group"
-  version     = "1.20"
+  name        = "k8s-cluster-regional-template-node-group-new"
+  description = "k8s-cluster-regional-template-node-group-new"
+  version     = var.default_version_k8s_node_group
 
-  labels = {
-    "key" = "value"
-  }
 
   instance_template {
-    platform_id = "standard-v2" #The ID of the hardware platform configuration for the node group compute instances
+    platform_id = "standard-v3" #The ID of the hardware platform configuration for the node group compute instances
 
     resources {
       memory = 2
@@ -93,7 +85,7 @@ resource "yandex_kubernetes_node_group" "my_node_group" {
  
   allocation_policy { #This argument specify subnets (zones), that will be used by node group compute instances. The structure is documented below.
     location {
-      zone = "ru-central1-c"
+      zone = var.default_subnet_id_zone_c
     }
   }
 
