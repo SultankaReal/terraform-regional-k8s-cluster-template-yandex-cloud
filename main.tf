@@ -85,7 +85,7 @@ resource "yandex_kubernetes_node_group" "my_node_group" {
  
   allocation_policy { #This argument specify subnets (zones), that will be used by node group compute instances. The structure is documented below.
     location {
-      zone = var.default_subnet_id_zone_c
+      zone = var.default_zone
     }
   }
 
